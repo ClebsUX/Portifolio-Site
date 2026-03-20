@@ -1,0 +1,1136 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cleberson Fernandes — Designer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:ital,wght@0,300;0,400;1,300&display=swap"
+        rel="stylesheet" />
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --bg: #0a0a0a;
+            --bg2: #111111;
+            --bg3: #181818;
+            --accent: #e8ff57;
+            --text: #f0ede6;
+            --muted: #888880;
+            --border: rgba(255, 255, 255, 0.07);
+            --font-display: 'Syne', sans-serif;
+            --font-body: 'DM Sans', sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--font-body);
+            font-weight: 300;
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* Cursor custom — so desktop */
+        .cursor {
+            display: none;
+        }
+
+        @media (hover: hover) and (pointer: fine) {
+            body {
+                cursor: none;
+            }
+
+            .cursor {
+                display: block;
+                width: 10px;
+                height: 10px;
+                background: var(--accent);
+                border-radius: 50%;
+                position: fixed;
+                top: 0;
+                left: 0;
+                pointer-events: none;
+                z-index: 9999;
+                transform: translate(-50%, -50%);
+                transition: width .2s, height .2s;
+                mix-blend-mode: difference;
+            }
+
+            .cursor.grow {
+                width: 40px;
+                height: 40px;
+            }
+        }
+
+        /* Noise */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 1000;
+            opacity: .4;
+        }
+
+        /* ══════════════ NAV ══════════════ */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 200;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+            backdrop-filter: blur(20px);
+            background: rgba(10, 10, 10, .75);
+        }
+
+        .nav-logo {
+            font-family: var(--font-display);
+            font-weight: 800;
+            font-size: 1rem;
+            letter-spacing: -.03em;
+            color: var(--text);
+            text-decoration: none;
+            position: relative;
+            z-index: 201;
+        }
+
+        .nav-logo span {
+            color: var(--accent);
+        }
+
+        /* Links — ocultos mobile, visiveis desktop */
+        .nav-links {
+            display: none;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--muted);
+            text-decoration: none;
+            font-size: .8rem;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            transition: color .2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        /* Botao hamburguer */
+        .nav-toggle {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 5px;
+            width: 36px;
+            height: 36px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 4px;
+            position: relative;
+            z-index: 201;
+        }
+
+        .nav-toggle span {
+            display: block;
+            height: 1.5px;
+            background: var(--text);
+            border-radius: 2px;
+            transition: transform .35s cubic-bezier(.4, 0, .2, 1),
+                opacity .25s ease, width .3s ease;
+            transform-origin: center;
+        }
+
+        .nav-toggle span:nth-child(1) {
+            width: 100%;
+        }
+
+        .nav-toggle span:nth-child(2) {
+            width: 100%;
+        }
+
+        .nav-toggle span:nth-child(3) {
+            width: 60%;
+        }
+
+        /* Aberto: forma X */
+        .nav-toggle.open span:nth-child(1) {
+            transform: translateY(6.5px) rotate(45deg);
+        }
+
+        .nav-toggle.open span:nth-child(2) {
+            opacity: 0;
+            transform: scaleX(0);
+        }
+
+        .nav-toggle.open span:nth-child(3) {
+            width: 100%;
+            transform: translateY(-6.5px) rotate(-45deg);
+        }
+
+        /* Overlay fullscreen */
+        .nav-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 199;
+            background: rgba(10, 10, 10, .97);
+            backdrop-filter: blur(24px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity .35s ease;
+        }
+
+        .nav-overlay.open {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .nav-overlay ul {
+            list-style: none;
+            text-align: center;
+        }
+
+        .nav-overlay ul li {
+            overflow: hidden;
+        }
+
+        .nav-overlay ul li a {
+            display: block;
+            font-family: var(--font-display);
+            font-weight: 800;
+            font-size: clamp(2.8rem, 12vw, 5rem);
+            letter-spacing: -.04em;
+            line-height: 1.15;
+            padding: .2em 0;
+            color: var(--text);
+            text-decoration: none;
+            transform: translateY(110%);
+            transition: transform .45s cubic-bezier(.4, 0, .2, 1), color .2s;
+        }
+
+        .nav-overlay.open ul li:nth-child(1) a {
+            transition-delay: .05s;
+        }
+
+        .nav-overlay.open ul li:nth-child(2) a {
+            transition-delay: .12s;
+        }
+
+        .nav-overlay.open ul li:nth-child(3) a {
+            transition-delay: .19s;
+        }
+
+        .nav-overlay.open ul li a {
+            transform: translateY(0);
+        }
+
+        .nav-overlay ul li a:hover {
+            color: var(--accent);
+        }
+
+        .nav-overlay-footer {
+            position: absolute;
+            bottom: 2.5rem;
+            font-size: .72rem;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            color: var(--muted);
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity .4s ease .35s, transform .4s ease .35s;
+        }
+
+        .nav-overlay.open .nav-overlay-footer {
+            opacity: 1;
+            transform: none;
+        }
+
+        /* Desktop: hamburguer e overlay somem */
+        @media (min-width: 768px) {
+            nav {
+                padding: 1.5rem 4rem;
+            }
+
+            .nav-logo {
+                font-size: 1.1rem;
+            }
+
+            .nav-toggle {
+                display: none;
+            }
+
+            .nav-overlay {
+                display: none;
+            }
+
+            .nav-links {
+                display: flex;
+                gap: 2.5rem;
+            }
+        }
+
+        /* ══════════════ HERO ══════════════ */
+        #hero {
+            min-height: 100svh;
+            display: flex;
+            align-items: flex-end;
+            padding: 0 1.5rem 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-bg-number {
+            position: absolute;
+            top: 50%;
+            right: -2rem;
+            transform: translateY(-50%);
+            font-family: var(--font-display);
+            font-weight: 800;
+            font-size: clamp(6rem, 28vw, 28rem);
+            color: transparent;
+            -webkit-text-stroke: 1px rgba(255, 255, 255, .04);
+            pointer-events: none;
+            user-select: none;
+            line-height: 1;
+        }
+
+        .hero-tag {
+            display: inline-block;
+            font-size: .68rem;
+            letter-spacing: .15em;
+            text-transform: uppercase;
+            color: var(--accent);
+            border: 1px solid var(--accent);
+            padding: .3rem .75rem;
+            border-radius: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-title {
+            font-family: var(--font-display);
+            font-weight: 800;
+            font-size: clamp(3rem, 13vw, 9rem);
+            line-height: .92;
+            letter-spacing: -.04em;
+            margin-bottom: 1.75rem;
+        }
+
+        .hero-title em {
+            font-style: italic;
+            font-weight: 400;
+            color: var(--muted);
+        }
+
+        .hero-desc {
+            max-width: 420px;
+            font-size: .9rem;
+            color: var(--muted);
+            line-height: 1.8;
+            margin-bottom: 2.25rem;
+        }
+
+        .hero-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: .6rem;
+            background: var(--accent);
+            color: #0a0a0a;
+            padding: .85rem 1.6rem;
+            border-radius: .35rem;
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: .85rem;
+            text-decoration: none;
+            transition: transform .2s, box-shadow .2s;
+        }
+
+        .hero-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(232, 255, 87, .3);
+        }
+
+        .hero-cta svg {
+            transition: transform .2s;
+        }
+
+        .hero-cta:hover svg {
+            transform: translateX(4px);
+        }
+
+        .hero-scroll {
+            position: absolute;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: .5rem;
+            color: var(--muted);
+            font-size: .65rem;
+            letter-spacing: .15em;
+            text-transform: uppercase;
+        }
+
+        .hero-scroll-line {
+            width: 1px;
+            height: 40px;
+            background: linear-gradient(to bottom, var(--muted), transparent);
+            animation: scrollLine 1.5s ease-in-out infinite;
+        }
+
+        @keyframes scrollLine {
+
+            0%,
+            100% {
+                opacity: .3
+            }
+
+            50% {
+                opacity: 1
+            }
+        }
+
+        @media (min-width: 768px) {
+            #hero {
+                padding: 0 4rem 5rem;
+            }
+
+            .hero-tag {
+                font-size: .72rem;
+                padding: .35rem .85rem;
+                margin-bottom: 2rem;
+            }
+
+            .hero-desc {
+                font-size: 1rem;
+                margin-bottom: 3rem;
+            }
+
+            .hero-cta {
+                padding: 1rem 2rem;
+                font-size: .9rem;
+            }
+
+            .hero-scroll {
+                bottom: 3rem;
+                right: 4rem;
+                font-size: .7rem;
+            }
+
+            .hero-scroll-line {
+                height: 60px;
+            }
+        }
+
+        /* ══════════════ SECTIONS ══════════════ */
+        section {
+            padding: 4.5rem 1.5rem;
+        }
+
+        .section-label {
+            display: flex;
+            align-items: center;
+            gap: .85rem;
+            font-size: .68rem;
+            letter-spacing: .18em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 2.5rem;
+        }
+
+        .section-label::before {
+            content: '';
+            display: block;
+            width: 1.5rem;
+            height: 1px;
+            background: var(--accent);
+            flex-shrink: 0;
+        }
+
+        @media (min-width: 768px) {
+            section {
+                padding: 7rem 4rem;
+            }
+
+            .section-label {
+                gap: 1rem;
+                font-size: .72rem;
+                margin-bottom: 3.5rem;
+            }
+
+            .section-label::before {
+                width: 2rem;
+            }
+        }
+
+        /* ══════════════ ABOUT ══════════════ */
+        #sobre {
+            background: var(--bg2);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        @media (min-width: 900px) {
+            .about-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 5rem;
+            }
+        }
+
+        .about-left h2 {
+            font-family: var(--font-display);
+            font-weight: 800;
+            font-size: clamp(1.9rem, 6vw, 3.5rem);
+            line-height: 1.05;
+            letter-spacing: -.03em;
+            margin-bottom: 1.25rem;
+        }
+
+        .about-left h2 span {
+            color: var(--accent);
+        }
+
+        .about-left p {
+            color: var(--muted);
+            margin-bottom: 1rem;
+            font-size: .9rem;
+        }
+
+        @media (min-width: 768px) {
+            .about-left p {
+                font-size: .95rem;
+            }
+        }
+
+        .skills-strip {
+            display: flex;
+            flex-wrap: wrap;
+            gap: .6rem;
+            margin-top: 1.75rem;
+        }
+
+        .skill-pill {
+            padding: .35rem .85rem;
+            border: 1px solid var(--border);
+            border-radius: 2rem;
+            font-size: .75rem;
+            color: var(--muted);
+            background: var(--bg3);
+            transition: border-color .2s, color .2s;
+        }
+
+        .skill-pill:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .about-right {
+            position: relative;
+        }
+
+        .avatar-frame {
+            aspect-ratio: 3/4;
+            max-height: 340px;
+            border-radius: .75rem;
+            background: var(--bg3);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        @media (min-width: 900px) {
+            .avatar-frame {
+                max-height: none;
+            }
+        }
+
+        .avatar-frame::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(232, 255, 87, .08), transparent 60%);
+        }
+
+        .avatar-initials {
+            font-family: var(--font-display);
+            font-weight: 800;
+            font-size: 4rem;
+            color: var(--border);
+            letter-spacing: -.05em;
+        }
+
+        .avatar-tag {
+            position: absolute;
+            bottom: 1.25rem;
+            left: 1.25rem;
+            background: var(--accent);
+            color: #0a0a0a;
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: .72rem;
+            padding: .4rem .85rem;
+            border-radius: .25rem;
+        }
+
+        /* ══════════════ PROJECTS ══════════════ */
+        #projetos {
+            background: var(--bg);
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.25rem;
+        }
+
+        @media (min-width: 640px) {
+            .projects-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.5rem;
+            }
+        }
+
+        .project-card {
+            background: var(--bg3);
+            border: 1px solid var(--border);
+            border-radius: .75rem;
+            overflow: hidden;
+            transition: border-color .3s, transform .3s;
+            text-decoration: none;
+            display: block;
+        }
+
+        .project-card:hover {
+            border-color: rgba(232, 255, 87, .3);
+            transform: translateY(-4px);
+        }
+
+        .project-card.featured {
+            grid-column: 1 / -1;
+        }
+
+        .project-thumb {
+            aspect-ratio: 16/7;
+            background: var(--bg2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        @media (min-width: 768px) {
+            .project-card.featured .project-thumb {
+                aspect-ratio: 16/6;
+            }
+        }
+
+        .p1 {
+            background: linear-gradient(135deg, #0f1f0a, #1a3512);
+        }
+
+        .p2 {
+            background: linear-gradient(135deg, #0a0f1f, #12183a);
+        }
+
+        .p3 {
+            background: linear-gradient(135deg, #1f0a10, #3a1218);
+        }
+
+        .p4 {
+            background: linear-gradient(135deg, #150f0a, #2e1f0e);
+        }
+
+        .project-info {
+            padding: 1.25rem;
+        }
+
+        @media (min-width: 768px) {
+            .project-info {
+                padding: 1.5rem;
+            }
+        }
+
+        .project-tags {
+            display: flex;
+            gap: .5rem;
+            margin-bottom: .65rem;
+            flex-wrap: wrap;
+        }
+
+        .project-tag {
+            font-size: .65rem;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            color: var(--accent);
+            background: rgba(232, 255, 87, .08);
+            padding: .18rem .55rem;
+            border-radius: .2rem;
+        }
+
+        .project-title {
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: 1rem;
+            color: var(--text);
+            margin-bottom: .4rem;
+            letter-spacing: -.02em;
+        }
+
+        @media (min-width: 768px) {
+            .project-title {
+                font-size: 1.1rem;
+            }
+        }
+
+        .project-desc {
+            font-size: .82rem;
+            color: var(--muted);
+        }
+
+        .project-arrow {
+            display: inline-flex;
+            align-items: center;
+            gap: .35rem;
+            font-size: .75rem;
+            color: var(--accent);
+            margin-top: .85rem;
+            font-family: var(--font-display);
+            font-weight: 700;
+        }
+
+        /* ══════════════ CONTACT ══════════════ */
+        #contato {
+            background: var(--bg2);
+            border-top: 1px solid var(--border);
+            text-align: center;
+        }
+
+        .contact-headline {
+            font-family: var(--font-display);
+            font-weight: 800;
+            font-size: clamp(2rem, 10vw, 5.5rem);
+            line-height: .95;
+            letter-spacing: -.04em;
+            margin-bottom: 1.25rem;
+        }
+
+        .contact-headline span {
+            color: var(--accent);
+        }
+
+        .contact-sub {
+            color: var(--muted);
+            max-width: 440px;
+            margin: 0 auto 2.5rem;
+            font-size: .9rem;
+        }
+
+        @media (min-width: 768px) {
+            .contact-sub {
+                font-size: .95rem;
+                margin-bottom: 3rem;
+            }
+        }
+
+        .contact-links {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 4rem;
+        }
+
+        @media (min-width: 480px) {
+            .contact-links {
+                flex-direction: row;
+                justify-content: center;
+                flex-wrap: wrap;
+                gap: 1.25rem;
+                margin-bottom: 5rem;
+            }
+        }
+
+        .contact-link {
+            display: inline-flex;
+            align-items: center;
+            gap: .6rem;
+            padding: .85rem 1.75rem;
+            border: 1px solid var(--border);
+            border-radius: .35rem;
+            color: var(--text);
+            text-decoration: none;
+            font-size: .85rem;
+            background: var(--bg3);
+            transition: border-color .2s, color .2s, background .2s;
+            width: 100%;
+            max-width: 280px;
+            justify-content: center;
+        }
+
+        @media (min-width: 480px) {
+            .contact-link {
+                width: auto;
+                max-width: none;
+                padding: .9rem 2rem;
+                font-size: .88rem;
+            }
+        }
+
+        .contact-link:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: rgba(232, 255, 87, .06);
+        }
+
+        .contact-link.primary {
+            background: var(--accent);
+            color: #0a0a0a;
+            border-color: var(--accent);
+            font-family: var(--font-display);
+            font-weight: 700;
+        }
+
+        .contact-link.primary:hover {
+            background: #d4eb3a;
+            border-color: #d4eb3a;
+            color: #0a0a0a;
+        }
+
+        /* ══════════════ FOOTER ══════════════ */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 2rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: .75rem;
+            text-align: center;
+            background: var(--bg);
+        }
+
+        @media (min-width: 768px) {
+            footer {
+                flex-direction: row;
+                justify-content: space-between;
+                padding: 2rem 4rem;
+                text-align: left;
+                gap: 0;
+            }
+        }
+
+        footer p {
+            font-size: .75rem;
+            color: var(--muted);
+        }
+
+        /* ══════════════ ANIMATIONS ══════════════ */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity .7s ease, transform .7s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: none;
+        }
+
+        .fade-in-delay-1 {
+            transition-delay: .1s;
+        }
+
+        .fade-in-delay-2 {
+            transition-delay: .2s;
+        }
+
+        .fade-in-delay-3 {
+            transition-delay: .3s;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .fade-in {
+                opacity: 1;
+                transform: none;
+                transition: none;
+            }
+
+            .hero-scroll-line {
+                animation: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="cursor" id="cursor"></div>
+
+    <!-- Nav -->
+    <nav>
+        <a class="nav-logo" href="#hero">CF<span>.</span></a>
+
+        <!-- Links — desktop -->
+        <ul class="nav-links">
+            <li><a href="#sobre">Sobre</a></li>
+            <li><a href="#projetos">Projetos</a></li>
+            <li><a href="#contato">Contato</a></li>
+        </ul>
+
+        <!-- Hamburguer — mobile -->
+        <button class="nav-toggle" id="navToggle" aria-label="Abrir menu" aria-expanded="false"
+            aria-controls="navOverlay">
+            <span></span><span></span><span></span>
+        </button>
+    </nav>
+
+    <!-- Overlay mobile -->
+    <div class="nav-overlay" id="navOverlay" role="dialog" aria-modal="true" aria-label="Menu">
+        <ul>
+            <li><a href="#sobre" class="nav-overlay-link">Sobre</a></li>
+            <li><a href="#projetos" class="nav-overlay-link">Projetos</a></li>
+            <li><a href="#contato" class="nav-overlay-link">Contato</a></li>
+        </ul>
+        <div class="nav-overlay-footer">João Pessoa &middot; PB &middot; Brasil</div>
+    </div>
+
+    <!-- Hero -->
+    <section id="hero">
+        <div class="hero-bg-number">CF</div>
+        <div>
+            <div class="hero-tag fade-in">Branding &amp; Design</div>
+            <h1 class="hero-title fade-in fade-in-delay-1">
+                Cleberson<br><em>Fernandes</em>
+            </h1>
+            <p class="hero-desc fade-in fade-in-delay-2">
+                Transformo ideias em experiências visuais memoráveis. Design que comunica, conecta e deixa uma marca.
+            </p>
+            <a href="#projetos" class="hero-cta fade-in fade-in-delay-3">
+                Ver projetos
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                    <path d="M3 8h10M9 4l4 4-4 4" stroke="#0a0a0a" stroke-width="1.5" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg>
+            </a>
+        </div>
+        <div class="hero-scroll">
+            <div class="hero-scroll-line"></div>
+            <span>Scroll</span>
+        </div>
+    </section>
+
+    <!-- Sobre -->
+    <section id="sobre">
+        <div class="section-label fade-in">01 — Sobre mim</div>
+        <div class="about-grid">
+            <div class="about-left fade-in">
+                <h2>Design é <span>intenção</span> em cada pixel</h2>
+                <p>Sou designer com foco em Branding. Acredito que bom design não é apenas bonito — ele resolve
+                    problemas e conta histórias.</p>
+                <p>Meu trabalho une estética contemporânea com estratégia clara, criando peças que impactam e duram.</p>
+                <div class="skills-strip fade-in fade-in-delay-1">
+                    <span class="skill-pill">Identidade Visual</span>
+                    <span class="skill-pill">Branding</span>
+                    <span class="skill-pill">Adobe Creative</span>
+                    <span class="skill-pill">Tipografia</span>
+                </div>
+            </div>
+            <div class="about-right fade-in fade-in-delay-1">
+                <div class="avatar-frame">
+                    <div class="avatar-perfil">
+                        <img src="img/perfil CF.png" alt="Redesign de Marca Institucional"
+                            style="width:100%;height:100%;object-fit:cover">
+                    </div>
+                    <div class="avatar-tag">Designer · João Pessoa</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projetos -->
+    <section id="projetos">
+        <div class="section-label fade-in">02 — Projetos</div>
+        <div class="projects-grid">
+            <!-- projeto 01 - Ecila -->
+            <a href="https://www.behance.net/gallery/151803825/Projeto-de-Id-Visual-Ecila-Nobrega-Psicologa"
+                class="project-card featured fade-in">
+                <div class="project-thumb p1">
+                    <img src="img/banner ecila 001.jpg" alt="Redesign de Marca Institucional"
+                        style="width:100%;height:100%;object-fit:cover;display:block;">
+                </div>
+                <div class="project-info">
+                    <div class="project-tags">
+                        <span class="project-tag">Branding</span>
+                        <span class="project-tag">Identidade Visual </span>
+                    </div>
+                    <div class="project-title">Identidade Visual - Psicóloga Écila Nóbrega</div>
+                    <p class="project-desc">Construção da marca, desde o conceito até aplicação em peças gráficas</p>
+                    <div class="project-arrow">Ver projeto →</div>
+                </div>
+            </a>
+            <!-- projeto 02 - -->
+            <a href="https://www.behance.net/gallery/174058213/Logo-Design-Victor-Lisboa"
+                class="project-card fade-in fade-in-delay-1">
+                <div class="project-thumb p2">
+                    <img src="img/banner victor.jpg" alt="Branding"
+                        style="width:100%;height:100%;object-fit:cover;display:block;">
+                </div>
+                <div class="project-info">
+                    <div class="project-tags"><span class="project-tag">Branding</span></div>
+                    <div class="project-title">Branding e identidade Visual - Advogado Victor Lisboa</div>
+                    <p class="project-desc">Design de interface para aplicativo de gestão de saúde, com foco em
+                        acessibilidade e clareza.</p>
+                    <div class="project-arrow">Ver projeto →</div>
+                </div>
+            </a>
+
+            <a href="#" class="project-card fade-in fade-in-delay-2">
+                <div class="project-thumb p3"></div>
+                <div class="project-info">
+                    <div class="project-tags"><span class="project-tag">Comunicação</span></div>
+                    <div class="project-title">Campanha Visual Institucional</div>
+                    <p class="project-desc">Série de peças gráficas para campanha de comunicação interna e externa de
+                        organização de saúde.</p>
+                    <div class="project-arrow">Ver projeto →</div>
+                </div>
+            </a>
+
+            <a href="#" class="project-card fade-in fade-in-delay-1">
+                <div class="project-thumb p4"></div>
+                <div class="project-info">
+                    <div class="project-tags"><span class="project-tag">Motion</span><span
+                            class="project-tag">Vídeo</span></div>
+                    <div class="project-title">Motion Design &amp; Animação</div>
+                    <p class="project-desc">Vinheta e animações para conteúdo digital e redes sociais com identidade
+                        coesa e dinâmica.</p>
+                    <div class="project-arrow">Ver projeto →</div>
+                </div>
+            </a>
+
+        </div>
+    </section>
+
+    <!-- Contato -->
+    <section id="contato">
+        <div class="section-label fade-in">03 — Contato</div>
+        <h2 class="contact-headline fade-in">Vamos criar<br><span>juntos?</span></h2>
+        <p class="contact-sub fade-in fade-in-delay-1">Aberto a novos projetos, colaborações e desafios criativos.</p>
+        <div class="contact-links fade-in fade-in-delay-2">
+            <a href="mailto:contato@clebersonfernandes.com" class="contact-link primary">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                    <path d="M2 4l6 5 6-5M2 4h12v8H2V4z" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg>
+                Enviar e-mail
+            </a>
+            <a href="https://behance.net" target="_blank" rel="noopener" class="contact-link">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                    <path
+                        d="M1 4h6c1.5 0 2.5.8 2.5 2.2C9.5 7.5 8.8 8.2 8 8.5c1.2.3 2 1.1 2 2.3C10 12.3 9 13 7.5 13H1V4z"
+                        stroke="currentColor" stroke-width="1.3" stroke-linecap="round" />
+                    <path d="M11 7h4M11 10h4M12 4.5h2" stroke="currentColor" stroke-width="1.3"
+                        stroke-linecap="round" />
+                </svg>
+                Behance
+            </a>
+            <a href="https://linkedin.com" target="_blank" rel="noopener" class="contact-link">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                    <path
+                        d="M2 5.5h2.5V14H2V5.5zM3.25 4.5a1.25 1.25 0 100-2.5 1.25 1.25 0 000 2.5zM6 5.5h2.4v1.15C8.8 6 9.8 5.3 11 5.3c2.2 0 3 1.5 3 3.4V14h-2.5V9.1c0-.8-.3-1.6-1.2-1.6-.9 0-1.3.7-1.3 1.6V14H6V5.5z"
+                        stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+                LinkedIn
+            </a>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2026 Cleberson Fernandes — Designer</p>
+        <p>João Pessoa, PB — Brasil</p>
+    </footer>
+
+    <script>
+        // Menu hamburguer
+        const toggle = document.getElementById('navToggle');
+        const overlay = document.getElementById('navOverlay');
+
+        function openMenu() {
+            toggle.classList.add('open');
+            overlay.classList.add('open');
+            toggle.setAttribute('aria-expanded', 'true');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeMenu() {
+            toggle.classList.remove('open');
+            overlay.classList.remove('open');
+            toggle.setAttribute('aria-expanded', 'false');
+            document.body.style.overflow = '';
+        }
+        toggle.addEventListener('click', () => {
+            overlay.classList.contains('open') ? closeMenu() : openMenu();
+        });
+        document.querySelectorAll('.nav-overlay-link').forEach(l => l.addEventListener('click', closeMenu));
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMenu(); });
+
+        // Cursor custom (so desktop)
+        const cursor = document.getElementById('cursor');
+        if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+            document.addEventListener('mousemove', e => {
+                cursor.style.left = e.clientX + 'px';
+                cursor.style.top = e.clientY + 'px';
+            });
+            document.querySelectorAll('a, button, .project-card, .skill-pill').forEach(el => {
+                el.addEventListener('mouseenter', () => cursor.classList.add('grow'));
+                el.addEventListener('mouseleave', () => cursor.classList.remove('grow'));
+            });
+        }
+
+        // Fade-in scroll
+        const io = new IntersectionObserver(entries => {
+            entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.fade-in').forEach(el => io.observe(el));
+
+        // Hero imediato
+        document.querySelectorAll('#hero .fade-in').forEach((el, i) => {
+            setTimeout(() => el.classList.add('visible'), 200 + i * 150);
+        });
+    </script>
+</body>
+
+</html>
