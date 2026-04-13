@@ -4,11 +4,43 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- ==================== SEO & META TAGS ==================== -->
     <title>Cleberson Fernandes — Designer</title>
+    <meta name="description"
+        content="Cleberson Fernandes — Designer especializado em Branding e Identidade Visual em João Pessoa, PB. Transformo ideias em experiências visuais memoráveis com estratégia e estética contemporânea." />
+    <meta name="author" content="Cleberson Fernandes" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://clebersonfernandes.com" />
+
+    <!-- ==================== FAVICON ==================== -->
+    <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+
+    <!-- Preload de fontes -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preload"
+        href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:ital,wght@0,300;0,400;1,300&display=swap"
+        as="style" />
     <link
         href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:ital,wght@0,300;0,400;1,300&display=swap"
         rel="stylesheet" />
+
+    <!-- Open Graph + Twitter -->
+    <meta property="og:title" content="Cleberson Fernandes — Designer" />
+    <meta property="og:description"
+        content="Transformo ideias em experiências visuais memoráveis. Design que comunica, conecta e deixa uma marca." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://clebersonfernandes.com" />
+    <meta property="og:image" content="https://clebersonfernandes.com/img/perfil CF.png" />
+    <meta property="og:locale" content="pt_BR" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Cleberson Fernandes — Designer" />
+    <meta name="twitter:description" content="Transformo ideias em experiências visuais memoráveis." />
+    <meta name="twitter:image" content="https://clebersonfernandes.com/img/perfil CF.png" />
+
     <style>
         *,
         *::before,
@@ -43,7 +75,7 @@
             overflow-x: hidden;
         }
 
-        /* Cursor custom — so desktop */
+        /* Cursor custom */
         .cursor {
             display: none;
         }
@@ -86,7 +118,7 @@
             opacity: .4;
         }
 
-        /* ══════════════ NAV ══════════════ */
+        /* ====================== NAV ====================== */
         nav {
             position: fixed;
             top: 0;
@@ -109,7 +141,6 @@
             letter-spacing: -.03em;
             color: var(--text);
             text-decoration: none;
-            position: relative;
             z-index: 201;
         }
 
@@ -117,7 +148,6 @@
             color: var(--accent);
         }
 
-        /* Links — ocultos mobile, visiveis desktop */
         .nav-links {
             display: none;
             list-style: none;
@@ -136,7 +166,6 @@
             color: var(--accent);
         }
 
-        /* Botao hamburguer */
         .nav-toggle {
             display: flex;
             flex-direction: column;
@@ -148,7 +177,6 @@
             border: none;
             cursor: pointer;
             padding: 4px;
-            position: relative;
             z-index: 201;
         }
 
@@ -157,9 +185,7 @@
             height: 1.5px;
             background: var(--text);
             border-radius: 2px;
-            transition: transform .35s cubic-bezier(.4, 0, .2, 1),
-                opacity .25s ease, width .3s ease;
-            transform-origin: center;
+            transition: transform .35s cubic-bezier(.4, 0, .2, 1), opacity .25s ease, width .3s ease;
         }
 
         .nav-toggle span:nth-child(1) {
@@ -174,7 +200,6 @@
             width: 60%;
         }
 
-        /* Aberto: forma X */
         .nav-toggle.open span:nth-child(1) {
             transform: translateY(6.5px) rotate(45deg);
         }
@@ -189,7 +214,6 @@
             transform: translateY(-6.5px) rotate(-45deg);
         }
 
-        /* Overlay fullscreen */
         .nav-overlay {
             position: fixed;
             inset: 0;
@@ -215,10 +239,6 @@
             text-align: center;
         }
 
-        .nav-overlay ul li {
-            overflow: hidden;
-        }
-
         .nav-overlay ul li a {
             display: block;
             font-family: var(--font-display);
@@ -231,18 +251,6 @@
             text-decoration: none;
             transform: translateY(110%);
             transition: transform .45s cubic-bezier(.4, 0, .2, 1), color .2s;
-        }
-
-        .nav-overlay.open ul li:nth-child(1) a {
-            transition-delay: .05s;
-        }
-
-        .nav-overlay.open ul li:nth-child(2) a {
-            transition-delay: .12s;
-        }
-
-        .nav-overlay.open ul li:nth-child(3) a {
-            transition-delay: .19s;
         }
 
         .nav-overlay.open ul li a {
@@ -262,7 +270,7 @@
             color: var(--muted);
             opacity: 0;
             transform: translateY(10px);
-            transition: opacity .4s ease .35s, transform .4s ease .35s;
+            transition: all .4s ease .35s;
         }
 
         .nav-overlay.open .nav-overlay-footer {
@@ -270,7 +278,6 @@
             transform: none;
         }
 
-        /* Desktop: hamburguer e overlay somem */
         @media (min-width: 768px) {
             nav {
                 padding: 1.5rem 4rem;
@@ -294,14 +301,38 @@
             }
         }
 
-        /* ══════════════ HERO ══════════════ */
-        #hero {
-            min-height: 100svh;
-            display: flex;
-            align-items: flex-end;
-            padding: 0 1.5rem 4rem;
+        /* ====================== HERO ====================== */
+
+        /* Vídeo de background */
+        .hero-video-bg {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .hero-video-bg video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.08;
+            display: block;
+        }
+
+        /* Garante que o conteúdo fique acima do vídeo */
+        .hero-content {
             position: relative;
-            overflow: hidden;
+            z-index: 1;
+            max-width: 800px;
+        }
+
+        .hero-scroll {
+            position: absolute;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            z-index: 1;
         }
 
         .hero-bg-number {
@@ -317,6 +348,7 @@
             pointer-events: none;
             user-select: none;
             line-height: 1;
+            z-index: 1;
         }
 
         .hero-tag {
@@ -333,16 +365,17 @@
 
         .hero-title {
             font-family: var(--font-display);
-            font-weight: 800;
-            font-size: clamp(3rem, 13vw, 9rem);
+            font-weight: 780;
+            font-size: clamp(2rem, 10vw, 8rem);
             line-height: .92;
             letter-spacing: -.04em;
             margin-bottom: 1.75rem;
+            word-break: break-word;
         }
 
         .hero-title em {
             font-style: italic;
-            font-weight: 400;
+            font-weight: 350;
             color: var(--muted);
         }
 
@@ -374,18 +407,7 @@
             box-shadow: 0 12px 40px rgba(232, 255, 87, .3);
         }
 
-        .hero-cta svg {
-            transition: transform .2s;
-        }
-
-        .hero-cta:hover svg {
-            transform: translateX(4px);
-        }
-
         .hero-scroll {
-            position: absolute;
-            bottom: 1.5rem;
-            right: 1.5rem;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -447,7 +469,51 @@
             }
         }
 
-        /* ══════════════ SECTIONS ══════════════ */
+        @keyframes scrollLine {
+
+            0%,
+            100% {
+                opacity: .3
+            }
+
+            50% {
+                opacity: 1
+            }
+        }
+
+        @media (min-width: 768px) {
+            #hero {
+                padding: 0 4rem 5rem;
+            }
+
+            .hero-tag {
+                font-size: .72rem;
+                padding: .35rem .85rem;
+                margin-bottom: 2rem;
+            }
+
+            .hero-desc {
+                font-size: 1rem;
+                margin-bottom: 3rem;
+            }
+
+            .hero-cta {
+                padding: 1rem 2rem;
+                font-size: .9rem;
+            }
+
+            .hero-scroll {
+                bottom: 3rem;
+                right: 4rem;
+                font-size: .7rem;
+            }
+
+            .hero-scroll-line {
+                height: 60px;
+            }
+        }
+
+        /* ====================== SECTIONS ====================== */
         section {
             padding: 4.5rem 1.5rem;
         }
@@ -469,7 +535,6 @@
             width: 1.5rem;
             height: 1px;
             background: var(--accent);
-            flex-shrink: 0;
         }
 
         @media (min-width: 768px) {
@@ -488,7 +553,7 @@
             }
         }
 
-        /* ══════════════ ABOUT ══════════════ */
+        /* ====================== ABOUT ====================== */
         #sobre {
             background: var(--bg2);
             border-top: 1px solid var(--border);
@@ -556,10 +621,6 @@
             color: var(--accent);
         }
 
-        .about-right {
-            position: relative;
-        }
-
         .avatar-frame {
             aspect-ratio: 3/4;
             max-height: 340px;
@@ -573,25 +634,11 @@
             position: relative;
         }
 
-        @media (min-width: 900px) {
-            .avatar-frame {
-                max-height: none;
-            }
-        }
-
         .avatar-frame::after {
             content: '';
             position: absolute;
             inset: 0;
             background: linear-gradient(135deg, rgba(232, 255, 87, .08), transparent 60%);
-        }
-
-        .avatar-initials {
-            font-family: var(--font-display);
-            font-weight: 800;
-            font-size: 4rem;
-            color: var(--border);
-            letter-spacing: -.05em;
         }
 
         .avatar-tag {
@@ -607,7 +654,7 @@
             border-radius: .25rem;
         }
 
-        /* ══════════════ PROJECTS ══════════════ */
+        /* ====================== PROJECTS ====================== */
         #projetos {
             background: var(--bg);
         }
@@ -636,7 +683,7 @@
         }
 
         .project-card:hover {
-            border-color: rgba(232, 255, 87, .3);
+            border-color: rgba(232, 255, 87, .4);
             transform: translateY(-4px);
         }
 
@@ -670,10 +717,6 @@
 
         .p3 {
             background: linear-gradient(135deg, #1f0a10, #3a1218);
-        }
-
-        .p4 {
-            background: linear-gradient(135deg, #150f0a, #2e1f0e);
         }
 
         .project-info {
@@ -712,12 +755,6 @@
             letter-spacing: -.02em;
         }
 
-        @media (min-width: 768px) {
-            .project-title {
-                font-size: 1.1rem;
-            }
-        }
-
         .project-desc {
             font-size: .82rem;
             color: var(--muted);
@@ -734,7 +771,7 @@
             font-weight: 700;
         }
 
-        /* ══════════════ CONTACT ══════════════ */
+        /* ====================== CONTACT ====================== */
         #contato {
             background: var(--bg2);
             border-top: 1px solid var(--border);
@@ -832,7 +869,7 @@
             color: #0a0a0a;
         }
 
-        /* ══════════════ FOOTER ══════════════ */
+        /* ====================== FOOTER ====================== */
         footer {
             border-top: 1px solid var(--border);
             padding: 2rem 1.5rem;
@@ -859,7 +896,7 @@
             color: var(--muted);
         }
 
-        /* ══════════════ ANIMATIONS ══════════════ */
+        /* ====================== ANIMATIONS & ACCESSIBILITY ====================== */
         .fade-in {
             opacity: 0;
             transform: translateY(24px);
@@ -883,6 +920,17 @@
             transition-delay: .3s;
         }
 
+        a:focus-visible,
+        button:focus-visible,
+        .project-card:focus-visible {
+            outline: 3px solid var(--accent);
+            outline-offset: 4px;
+        }
+
+        .project-card:hover {
+            border-color: rgba(232, 255, 87, .4);
+        }
+
         @media (prefers-reduced-motion: reduce) {
             .fade-in {
                 opacity: 1;
@@ -904,15 +952,11 @@
     <!-- Nav -->
     <nav>
         <a class="nav-logo" href="#hero">CF<span>.</span></a>
-
-        <!-- Links — desktop -->
         <ul class="nav-links">
             <li><a href="#sobre">Sobre</a></li>
             <li><a href="#projetos">Projetos</a></li>
             <li><a href="#contato">Contato</a></li>
         </ul>
-
-        <!-- Hamburguer — mobile -->
         <button class="nav-toggle" id="navToggle" aria-label="Abrir menu" aria-expanded="false"
             aria-controls="navOverlay">
             <span></span><span></span><span></span>
@@ -930,16 +974,19 @@
     </div>
 
     <!-- Hero -->
+    <!-- Vídeo de background — substitua "video/hero-bg.mp4" pelo caminho do seu vídeo -->
+    <div class="hero-video-bg" aria-hidden="true">
+        <video src="video/pixel2.mp4" autoplay loop muted playsinline preload="none">
+        </video>
+    </div>
+
     <section id="hero">
         <div class="hero-bg-number">CF</div>
         <div>
             <div class="hero-tag fade-in">Branding &amp; Design</div>
-            <h1 class="hero-title fade-in fade-in-delay-1">
-                Cleberson<br><em>Fernandes</em>
-            </h1>
-            <p class="hero-desc fade-in fade-in-delay-2">
-                Transformo ideias em experiências visuais memoráveis. Design que comunica, conecta e deixa uma marca.
-            </p>
+            <h1 class="hero-title fade-in fade-in-delay-1">Cleberson<br><em>Fernandes</em></h1>
+            <p class="hero-desc fade-in fade-in-delay-2">Transformo ideias em experiências visuais memoráveis. Design
+                que comunica, conecta e deixa uma marca.</p>
             <a href="#projetos" class="hero-cta fade-in fade-in-delay-3">
                 Ver projetos
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
@@ -966,15 +1013,16 @@
                 <div class="skills-strip fade-in fade-in-delay-1">
                     <span class="skill-pill">Identidade Visual</span>
                     <span class="skill-pill">Branding</span>
-                    <span class="skill-pill">Adobe Creative</span>
+                    <span class="skill-pill">Design</span>
                     <span class="skill-pill">Tipografia</span>
                 </div>
             </div>
             <div class="about-right fade-in fade-in-delay-1">
                 <div class="avatar-frame">
                     <div class="avatar-perfil">
-                        <img src="img/perfil CF.png" alt="Redesign de Marca Institucional"
-                            style="width:100%;height:100%;object-fit:cover">
+                        <img src="img/perfil CF.png"
+                            alt="Foto de perfil de Cleberson Fernandes, designer especializado em branding e identidade visual"
+                            style="width:100%;height:100%;object-fit:cover" decoding="async">
                     </div>
                     <div class="avatar-tag">Designer · João Pessoa</div>
                 </div>
@@ -986,79 +1034,83 @@
     <section id="projetos">
         <div class="section-label fade-in">02 — Projetos</div>
         <div class="projects-grid">
-            <!-- projeto 01 - Ecila -->
             <a href="https://www.behance.net/gallery/151803825/Projeto-de-Id-Visual-Ecila-Nobrega-Psicologa"
                 class="project-card featured fade-in">
                 <div class="project-thumb p1">
-                    <img src="img/banner ecila 001.jpg" alt="Redesign de Marca Institucional"
-                        style="width:100%;height:100%;object-fit:cover;display:block;">
+                    <img src="img/banner ecila 001.jpg" alt="Identidade Visual - Psicóloga Écila Nóbrega"
+                        style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy" decoding="async">
                 </div>
                 <div class="project-info">
-                    <div class="project-tags">
-                        <span class="project-tag">Branding</span>
-                        <span class="project-tag">Identidade Visual </span>
-                    </div>
+                    <div class="project-tags"><span class="project-tag">Branding</span><span
+                            class="project-tag">Identidade Visual</span></div>
                     <div class="project-title">Identidade Visual - Psicóloga Écila Nóbrega</div>
-                    <p class="project-desc">Construção da marca, desde o conceito até aplicação em peças gráficas</p>
+                    <p class="project-desc">Foi realizado o desenvolvimento da identidade visual da psicóloga Écila
+                        Nóbrega, onde trabalhei com a fusão entre o símbolo da Psicologia (Ψ) e a silhueta de uma
+                        borboleta, criando uma representação moderna e significativa da transformação e do bem-estar
+                        mental.</p>
                     <div class="project-arrow">Ver projeto →</div>
                 </div>
             </a>
-            <!-- projeto 02 - -->
+
             <a href="https://www.behance.net/gallery/174058213/Logo-Design-Victor-Lisboa"
                 class="project-card fade-in fade-in-delay-1">
                 <div class="project-thumb p2">
-                    <img src="img/banner victor.jpg" alt="Branding"
-                        style="width:100%;height:100%;object-fit:cover;display:block;">
+                    <img src="img/banner victor.jpg" alt="Branding e identidade Visual - Advogado Victor Lisboa"
+                        style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy" decoding="async">
                 </div>
                 <div class="project-info">
                     <div class="project-tags"><span class="project-tag">Branding</span></div>
                     <div class="project-title">Branding e identidade Visual - Advogado Victor Lisboa</div>
-                    <p class="project-desc">Design de interface para aplicativo de gestão de saúde, com foco em
-                        acessibilidade e clareza.</p>
+                    <p class="project-desc">Fiz o desenvolvimento da identidade visual do advogado Victor Lisboa, criei
+                        um conceito que equilibra elegância e tradição, incorporando um toque moderno.</p>
                     <div class="project-arrow">Ver projeto →</div>
                 </div>
             </a>
 
             <a href="#" class="project-card fade-in fade-in-delay-2">
-                <div class="project-thumb p3"></div>
+                <div class="project-thumb p3">
+                    <img src="img/banner Vicker.jpg" alt="Projeto de Rebranding - Vicker Quality Tools"
+                        style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy" decoding="async">
+                </div>
                 <div class="project-info">
-                    <div class="project-tags"><span class="project-tag">Comunicação</span></div>
-                    <div class="project-title">Campanha Visual Institucional</div>
-                    <p class="project-desc">Série de peças gráficas para campanha de comunicação interna e externa de
-                        organização de saúde.</p>
+                    <div class="project-tags"><span class="project-tag">Branding</span></div>
+                    <div class="project-title">Projeto de Rebranding - Vicker Quality Tools</div>
+                    <p class="project-desc">Projeto fictício de Rebranding da marca Vicker</p>
                     <div class="project-arrow">Ver projeto →</div>
                 </div>
             </a>
-
-            <a href="#" class="project-card fade-in fade-in-delay-1">
-                <div class="project-thumb p4"></div>
-                <div class="project-info">
-                    <div class="project-tags"><span class="project-tag">Motion</span><span
-                            class="project-tag">Vídeo</span></div>
-                    <div class="project-title">Motion Design &amp; Animação</div>
-                    <p class="project-desc">Vinheta e animações para conteúdo digital e redes sociais com identidade
-                        coesa e dinâmica.</p>
-                    <div class="project-arrow">Ver projeto →</div>
-                </div>
-            </a>
-
         </div>
     </section>
 
-    <!-- Contato -->
+    <!-- Contato (com WhatsApp adicionado) -->
     <section id="contato">
         <div class="section-label fade-in">03 — Contato</div>
         <h2 class="contact-headline fade-in">Vamos criar<br><span>juntos?</span></h2>
         <p class="contact-sub fade-in fade-in-delay-1">Aberto a novos projetos, colaborações e desafios criativos.</p>
+
         <div class="contact-links fade-in fade-in-delay-2">
-            <a href="mailto:contato@clebersonfernandes.com" class="contact-link primary">
+            <!-- E-mail (mantido como primary) -->
+            <a href="mailto:rodrigues.cleberson@gmail.com" class="contact-link primary">
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                     <path d="M2 4l6 5 6-5M2 4h12v8H2V4z" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"
                         stroke-linejoin="round" />
                 </svg>
                 Enviar e-mail
             </a>
-            <a href="https://behance.net" target="_blank" rel="noopener" class="contact-link">
+
+            <!-- WhatsApp (novo botão) -->
+            <a href="https://wa.me/5583996745903?text=Ol%C3%A1.%20Gostaria%20de%20conversar%20mais%20sobre%20o%20desenvolvimento%20de%20projetos"
+                target="_blank" rel="noopener" class="contact-link">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.198-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.485-.888-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.355L2 22l1.395-4.755a9.887 9.887 0 01-1.356-5.03C2.04 6.098 6.1 2 11.04 2c2.69 0 5.22 1.048 7.118 2.947 1.898 1.899 2.947 4.428 2.947 7.118 0 5-4.06 8.96-9.04 8.96z"
+                        stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
+                </svg>
+                WhatsApp
+            </a>
+
+            <!-- Behance -->
+            <a href="https://www.behance.net/clebersondesigners" target="_blank" rel="noopener" class="contact-link">
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                     <path
                         d="M1 4h6c1.5 0 2.5.8 2.5 2.2C9.5 7.5 8.8 8.2 8 8.5c1.2.3 2 1.1 2 2.3C10 12.3 9 13 7.5 13H1V4z"
@@ -1068,7 +1120,10 @@
                 </svg>
                 Behance
             </a>
-            <a href="https://linkedin.com" target="_blank" rel="noopener" class="contact-link">
+
+            <!-- LinkedIn -->
+            <a href="https://www.linkedin.com/in/cleberson-fernandes-07789478/" target="_blank" rel="noopener"
+                class="contact-link">
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                     <path
                         d="M2 5.5h2.5V14H2V5.5zM3.25 4.5a1.25 1.25 0 100-2.5 1.25 1.25 0 000 2.5zM6 5.5h2.4v1.15C8.8 6 9.8 5.3 11 5.3c2.2 0 3 1.5 3 3.4V14h-2.5V9.1c0-.8-.3-1.6-1.2-1.6-.9 0-1.3.7-1.3 1.6V14H6V5.5z"
@@ -1083,6 +1138,28 @@
         <p>© 2026 Cleberson Fernandes — Designer</p>
         <p>João Pessoa, PB — Brasil</p>
     </footer>
+
+    <!-- Schema JSON-LD -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Cleberson Fernandes",
+      "jobTitle": "Designer Especializado em Branding e Identidade Visual",
+      "url": "https://clebersonfernandes.com",
+      "image": "https://clebersonfernandes.com/img/perfil CF.png",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "João Pessoa",
+        "addressRegion": "PB",
+        "addressCountry": "BR"
+      },
+      "sameAs": [
+        "https://www.behance.net",
+        "https://linkedin.com"
+      ]
+    }
+    </script>
 
     <script>
         // Menu hamburguer
@@ -1107,7 +1184,7 @@
         document.querySelectorAll('.nav-overlay-link').forEach(l => l.addEventListener('click', closeMenu));
         document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMenu(); });
 
-        // Cursor custom (so desktop)
+        // Cursor custom
         const cursor = document.getElementById('cursor');
         if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
             document.addEventListener('mousemove', e => {
@@ -1120,7 +1197,7 @@
             });
         }
 
-        // Fade-in scroll
+        // Fade-in
         const io = new IntersectionObserver(entries => {
             entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
         }, { threshold: 0.1 });
