@@ -639,7 +639,7 @@
         }
 
         .project-card:hover {
-            border-color: rgba(232, 255, 87, .4);
+            border-color: #41b6a2;
             transform: translateY(-4px);
         }
 
